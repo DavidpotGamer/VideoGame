@@ -1,87 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>🎮 Portal PRO</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #111;
-  color: white;
-}
-
-.container {
-  display: flex;
-}
-
-/* menú izquierda */
-.sidebar {
-  width: 120px;
-  background: #000;
-  padding: 10px;
-}
-
-.game-btn {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-  background: #222;
-  border: none;
-  color: white;
-  cursor: pointer;
-  width: 100%;
-}
-
-.game-btn:hover {
-  background: #444;
-}
-
-/* pantalla */
-.main {
-  flex: 1;
-  text-align: center;
-}
-
-iframe {
-  width: 90%;
-  height: 600px;
-  border: none;
-  margin-top: 20px;
-}
-</style>
-
+  <title>Mi página gamer 🔥</title>
 </head>
 
-<body>
+<body style="background:black; color:white; text-align:center; font-family:sans-serif;">
 
-<div class="container">
+<h1>🎮 MI PORTAL DE JUEGOS 🎮</h1>
 
-  <!-- MENÚ -->
-  <div class="sidebar">
-    <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 1</button>
-    <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 2</button>
-    <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 3</button>
-    <button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍</button>
-  </div>
+<h2>🟢 Juego 1</h2>
+<iframe src="https://scratch.mit.edu/projects/10128407/embed"
+        width="600" height="400"></iframe>
 
-  <!-- PANTALLA -->
-  <div class="main">
-    <h1>🔥 PORTAL GAMER 🔥</h1>
+<h2>🟢 Juego 2</h2>
+<iframe src="https://scratch.mit.edu/projects/34459990/embed"
+        width="600" height="400"></iframe>
 
-    <iframe id="gameFrame"
-    src="https://scratch.mit.edu/projects/10128407/embed">
-    </iframe>
+<h2>🟢 Juego 3</h2>
+<iframe src="https://scratch.mit.edu/projects/165126/embed"
+        width="600" height="400"></iframe>
 
-  </div>
+<h2>💬 Chat en vivo</h2>
 
-</div>
-
-<script>
-function cambiarJuego(url) {
-  document.getElementById("gameFrame").src = url;
-}
-</script>
+<iframe src="https://losfachasxd.chatango.com/"
+        width="500"
+        height="500"
+        style="border:none;">
+</iframe>
 
 </body>
 </html>
