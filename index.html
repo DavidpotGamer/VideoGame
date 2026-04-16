@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,12 +33,25 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
   width:100%;
 }
 
-/* BOTON FLECHA */
+/* BOTON MENU */
 #toggleBtn{
   position:absolute;
   top:10px;
   left:120px;
   background:#0084EF;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  cursor:pointer;
+  z-index:10;
+}
+
+/* BOTON CHAT */
+#chatToggle{
+  position:absolute;
+  top:50px;
+  left:120px;
+  background:#00c853;
   color:white;
   border:none;
   padding:5px 10px;
@@ -53,7 +65,12 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
 .content { display:flex; flex:1; }
 
 .game { flex:2; text-align:center; }
-.chat { width:350px; }
+.chat { width:350px; transition:0.3s; }
+
+.chat.hidden {
+  width:0;
+  overflow:hidden;
+}
 
 iframe {
   width:100%;
@@ -65,7 +82,9 @@ iframe {
 
 <body>
 
+<!-- BOTONES -->
 <button id="toggleBtn" onclick="toggleMenu()">⬅️</button>
+<button id="chatToggle" onclick="toggleChat()">💬</button>
 
 <div class="container">
 
@@ -94,7 +113,7 @@ src="https://scratch.mit.edu/projects/10128407/embed">
 </iframe>
 </div>
 
-<div class="chat">
+<div class="chat" id="chat">
 <iframe src="https://losfachasxd.chatango.com/"></iframe>
 </div>
 
@@ -105,17 +124,17 @@ src="https://scratch.mit.edu/projects/10128407/embed">
 </div>
 
 <script>
-// cambiar juegos normales
+// cambiar juegos
 function cambiarJuego(url){
   document.getElementById("gameFrame").src = url;
 }
 
-// RocketGoal (intenta iframe)
+// RocketGoal
 function abrirRocket(){
   document.getElementById("gameFrame").src = "https://rocketgoal.io/";
 }
 
-// menú toggle
+// menú
 function toggleMenu(){
   const menu=document.getElementById("menu");
   const btn=document.getElementById("toggleBtn");
@@ -128,6 +147,20 @@ function toggleMenu(){
   }else{
     btn.innerText="⬅️";
     btn.style.left="120px";
+  }
+}
+
+// chat
+function toggleChat(){
+  const chat=document.getElementById("chat");
+  const btn=document.getElementById("chatToggle");
+
+  chat.classList.toggle("hidden");
+
+  if(chat.classList.contains("hidden")){
+    btn.innerText="➡️💬";
+  }else{
+    btn.innerText="💬";
   }
 }
 </script>
