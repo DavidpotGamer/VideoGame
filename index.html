@@ -1,16 +1,15 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>🎮 Portal PRO</title>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <style>
 body { margin:0; font-family:sans-serif; background:#111; color:white; }
 
 .container { display:flex; height:100vh; }
 
+/* MENU */
 .sidebar {
   width:120px;
   background:#000;
@@ -48,29 +47,18 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
   z-index:10;
 }
 
+/* CONTENIDO */
 .main { flex:1; display:flex; flex-direction:column; }
 .header { background:#000; padding:10px; text-align:center; }
 .content { display:flex; flex:1; }
 
-.game { flex:2; text-align:center; position:relative; }
+.game { flex:2; text-align:center; }
 .chat { width:350px; }
 
-canvas {
-  border:2px solid white;
-  margin-top:10px;
-  touch-action:manipulation;
-}
-
-/* contador */
-#countdown{
-  position:absolute;
-  top:40%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:100px;
-  color:white;
-  text-shadow:3px 3px black;
-  display:none;
+iframe {
+  width:100%;
+  height:100%;
+  border:none;
 }
 </style>
 </head>
@@ -82,68 +70,47 @@ canvas {
 <div class="container">
 
 <div class="sidebar" id="menu">
-<button class="game-btn">♟️ Ajedrez</button>
+
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 1</button>
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 2</button>
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 3</button>
+<button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍</button>
+
+<button class="game-btn" onclick="abrirChess()">♟️ Chess PRO</button>
+
 </div>
 
 <div class="main">
 
-<div class="header"><h1>♟️ AJEDREZ ONLINE</h1></div>
+<div class="header">
+<h1>🔥 PORTAL GAMER 🔥</h1>
+</div>
 
 <div class="content">
 
 <div class="game">
-
-<input id="room" placeholder="Sala (ej: 123)">
-<button id="joinBtn">Unirse</button>
-
-<canvas id="board" width="320" height="320"></canvas>
-
-<div id="countdown"></div>
-
+<iframe id="gameFrame"
+src="https://scratch.mit.edu/projects/10128407/embed">
+</iframe>
 </div>
 
 <div class="chat">
-<iframe src="https://losfachasxd.chatango.com/" width="100%" height="100%"></iframe>
+<iframe src="https://losfachasxd.chatango.com/"></iframe>
 </div>
 
 </div>
+
 </div>
+
 </div>
 
 <script>
-// Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBYJFm9zy8vRv4F0Ets_3NLtUJ2zuj27BE",
-  authDomain: "ajedrez-online-3c037.firebaseapp.com",
-  databaseURL: "https://ajedrez-online-3c037-default-rtdb.firebaseio.com",
-  projectId: "ajedrez-online-3c037"
-};
+// cambiar juegos
+function cambiarJuego(url){
+  document.getElementById("gameFrame").src = url;
+}
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-let room="", player="", turn="white";
-
-let board=[
-["♜","♞","♝","♛","♚","♝","♞","♜"],
-["♟","♟","♟","♟","♟","♟","♟","♟"],
-["","","","","","","",""],
-["","","","","","","",""],
-["","","","","","","",""],
-["","","","","","","",""],
-["♙","♙","♙","♙","♙","♙","♙","♙"],
-["♖","♘","♗","♕","♔","♗","♘","♖"]
-];
-
-const canvas=document.getElementById("board");
-const ctx=canvas.getContext("2d");
-const size=40;
-let selected=null;
-
-/* BOTON iPad FIX */
-document.getElementById("joinBtn").addEventListener("click", join);
-
-/* MENU */
+// menu toggle
 function toggleMenu(){
   const menu=document.getElementById("menu");
   const btn=document.getElementById("toggleBtn");
@@ -159,105 +126,22 @@ function toggleMenu(){
   }
 }
 
-/* UNIR */
-function join(){
-  // 🔥 feedback visual (para iPad)
-  document.body.style.background="#222";
+// abrir chess
+function abrirChess(){
+  document.body.innerHTML = `
+    <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
+      
+      <button onclick="location.reload()" 
+      style="position:absolute; top:10px; left:10px; z-index:10; padding:10px; background:#0084EF; color:white; border:none;">
+      ⬅️ Volver
+      </button>
 
-  room=document.getElementById("room").value;
-  const ref=db.ref("rooms/"+room);
-
-  ref.once("value").then(snap=>{
-    if(!snap.exists()){
-      player="white";
-      ref.set({board,turn,players:1,start:false});
-    }else{
-      player="black";
-      ref.update({players:2,start:true});
-    }
-  });
-
-  ref.on("value",snap=>{
-    let data=snap.val();
-    if(!data)return;
-
-    board=data.board;
-    turn=data.turn;
-
-    if(data.start){
-      countdown();
-    }
-
-    draw();
-  });
+      <iframe src="https://www.chess.com/play/online"
+      style="width:100%; height:100%; border:none;"></iframe>
+    
+    </div>
+  `;
 }
-
-/* CONTADOR */
-function countdown(){
-  let c=3;
-  let el=document.getElementById("countdown");
-  el.style.display="block";
-
-  let i=setInterval(()=>{
-    el.innerText=c;
-    c--;
-    if(c<0){
-      clearInterval(i);
-      el.style.display="none";
-    }
-  },1000);
-}
-
-/* DIBUJAR */
-function draw(){
-  ctx.clearRect(0,0,320,320);
-
-  for(let y=0;y<8;y++){
-    for(let x=0;x<8;x++){
-      ctx.fillStyle=(x+y)%2?"#444":"#eee";
-      ctx.fillRect(x*size,y*size,size,size);
-
-      let p=board[y][x];
-      if(p){
-        ctx.font="30px Arial";
-        ctx.fillStyle=p.match(/[♙♖♘♗♕♔]/)?"white":"black";
-        ctx.fillText(p,x*size+6,y*size+30);
-      }
-    }
-  }
-}
-
-/* MOVER */
-canvas.addEventListener("click",e=>{
-  let x=Math.floor(e.offsetX/size);
-  let y=Math.floor(e.offsetY/size);
-  move(x,y);
-});
-
-canvas.addEventListener("touchstart",e=>{
-  let rect=canvas.getBoundingClientRect();
-  let x=Math.floor((e.touches[0].clientX-rect.left)/size);
-  let y=Math.floor((e.touches[0].clientY-rect.top)/size);
-  move(x,y);
-});
-
-function move(x,y){
-  if(turn!==player)return;
-
-  if(!selected){
-    selected={x,y};
-  }else{
-    board[y][x]=board[selected.y][selected.x];
-    board[selected.y][selected.x]="";
-    selected=null;
-
-    turn=turn==="white"?"black":"white";
-
-    db.ref("rooms/"+room).set({board,turn,players:2,start:true});
-  }
-}
-
-draw();
 </script>
 
 </body>
