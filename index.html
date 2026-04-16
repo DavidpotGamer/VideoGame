@@ -93,9 +93,9 @@ iframe {
 <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 Juego 1</button>
 <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 Juego 2</button>
 <button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 Juego 3</button>
-<button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍 Slither</button>
 
 <button class="game-btn" onclick="abrirRocket()">⚽ RocketGoal</button>
+<button class="game-btn" onclick="abrirSlither()">🐍 Slither</button>
 
 </div>
 
@@ -124,14 +124,19 @@ src="https://scratch.mit.edu/projects/10128407/embed">
 </div>
 
 <script>
-// cambiar juegos
+// cambiar juegos iframe
 function cambiarJuego(url){
   document.getElementById("gameFrame").src = url;
 }
 
-// RocketGoal
+// RocketGoal (puede funcionar en iframe)
 function abrirRocket(){
   document.getElementById("gameFrame").src = "https://rocketgoal.io/";
+}
+
+// Slither (abrir aparte para que funcione bien)
+function abrirSlither(){
+  window.open("https://slither.io", "_blank");
 }
 
 // menú
