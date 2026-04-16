@@ -71,12 +71,12 @@ iframe {
 
 <div class="sidebar" id="menu">
 
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 1</button>
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 2</button>
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 3</button>
-<button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍</button>
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 Juego 1</button>
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 Juego 2</button>
+<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 Juego 3</button>
+<button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍 Slither</button>
 
-<button class="game-btn" onclick="abrirChess()">♟️ Chess PRO</button>
+<button class="game-btn" onclick="abrirRocket()">⚽ RocketGoal</button>
 
 </div>
 
@@ -105,12 +105,17 @@ src="https://scratch.mit.edu/projects/10128407/embed">
 </div>
 
 <script>
-// cambiar juegos
+// cambiar juegos normales
 function cambiarJuego(url){
   document.getElementById("gameFrame").src = url;
 }
 
-// menu toggle
+// RocketGoal (intenta iframe)
+function abrirRocket(){
+  document.getElementById("gameFrame").src = "https://rocketgoal.io/";
+}
+
+// menú toggle
 function toggleMenu(){
   const menu=document.getElementById("menu");
   const btn=document.getElementById("toggleBtn");
@@ -124,23 +129,6 @@ function toggleMenu(){
     btn.innerText="⬅️";
     btn.style.left="120px";
   }
-}
-
-// abrir chess
-function abrirChess(){
-  document.body.innerHTML = `
-    <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
-      
-      <button onclick="location.reload()" 
-      style="position:absolute; top:10px; left:10px; z-index:10; padding:10px; background:#0084EF; color:white; border:none;">
-      ⬅️ Volver
-      </button>
-
-      <iframe src="https://www.chess.com/play/online"
-      style="width:100%; height:100%; border:none;"></iframe>
-    
-    </div>
-  `;
 }
 </script>
 
