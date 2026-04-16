@@ -16,7 +16,7 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
 .content { display:flex; flex:1; }
 .game { flex:2; text-align:center; }
 .chat { width:350px; }
-canvas { border:2px solid white; margin-top:10px; }
+canvas { border:2px solid white; margin-top:10px; touch-action: manipulation; }
 </style>
 </head>
 
@@ -25,7 +25,7 @@ canvas { border:2px solid white; margin-top:10px; }
 <div class="container">
 
 <div class="sidebar">
-<button class="game-btn" onclick="abrirAjedrez()">♟️ Ajedrez</button>
+<button class="game-btn">♟️ Ajedrez</button>
 </div>
 
 <div class="main">
@@ -37,7 +37,7 @@ canvas { border:2px solid white; margin-top:10px; }
 <div class="game">
 <input id="room" placeholder="Sala (ej: 123)">
 <button onclick="join()">Entrar</button>
-<canvas id="board" width="400" height="400"></canvas>
+<canvas id="board" width="320" height="320"></canvas>
 </div>
 
 <div class="chat">
@@ -64,41 +64,40 @@ let room = "";
 let player = "";
 let turn = "white";
 
-// tablero inicial
+// ♟️ piezas reales
 let board = [
-["r","n","b","q","k","b","n","r"],
-["p","p","p","p","p","p","p","p"],
+["♜","♞","♝","♛","♚","♝","♞","♜"],
+["♟","♟","♟","♟","♟","♟","♟","♟"],
 ["","","","","","","",""],
 ["","","","","","","",""],
 ["","","","","","","",""],
 ["","","","","","","",""],
-["P","P","P","P","P","P","P","P"],
-["R","N","B","Q","K","B","N","R"]
+["♙","♙","♙","♙","♙","♙","♙","♙"],
+["♖","♘","♗","♕","♔","♗","♘","♖"]
 ];
 
 const canvas = document.getElementById("board");
 const ctx = canvas.getContext("2d");
-const size = 50;
+const size = 40;
 
 let selected = null;
 
-// unir sala
+// 🔗 UNIR SALA (ARREGLADO)
 function join(){
   room = document.getElementById("room").value;
-
   const ref = db.ref("rooms/" + room);
 
-  ref.once("value", snap => {
+  ref.get().then(snap=>{
     if(!snap.exists()){
-      player = "white";
-      ref.set({ board, turn });
+      player="white";
+      ref.set({board, turn});
     } else {
-      player = "black";
+      player="black";
     }
   });
 
-  ref.on("value", snap => {
-    const data = snap.val();
+  ref.on("value", snap=>{
+    let data = snap.val();
     if(data){
       board = data.board;
       turn = data.turn;
@@ -107,46 +106,54 @@ function join(){
   });
 }
 
-// dibujar
+// 🎨 DIBUJAR
 function draw(){
-  ctx.clearRect(0,0,400,400);
+  ctx.clearRect(0,0,320,320);
 
   for(let y=0;y<8;y++){
     for(let x=0;x<8;x++){
-      ctx.fillStyle = (x+y)%2 ? "#555" : "#eee";
+      ctx.fillStyle = (x+y)%2 ? "#444" : "#eee";
       ctx.fillRect(x*size,y*size,size,size);
 
       let piece = board[y][x];
       if(piece){
-        ctx.fillStyle = piece === piece.toUpperCase() ? "white" : "black";
-        ctx.fillText(piece, x*size+20, y*size+30);
+        ctx.font="30px Arial";
+        ctx.fillStyle = piece.match(/[♙♖♘♗♕♔]/) ? "white" : "black";
+        ctx.fillText(piece, x*size+6, y*size+30);
       }
     }
   }
 }
 
-// click mover
-canvas.onclick = (e)=>{
-  const x = Math.floor(e.offsetX/size);
-  const y = Math.floor(e.offsetY/size);
+// 👆 CLICK + TOUCH (ARREGLADO)
+canvas.addEventListener("click", e=>{
+  let x=Math.floor(e.offsetX/size);
+  let y=Math.floor(e.offsetY/size);
+  handleMove(x,y);
+});
+
+canvas.addEventListener("touchstart", e=>{
+  let rect=canvas.getBoundingClientRect();
+  let x=Math.floor((e.touches[0].clientX-rect.left)/size);
+  let y=Math.floor((e.touches[0].clientY-rect.top)/size);
+  handleMove(x,y);
+});
+
+// mover
+function handleMove(x,y){
+  if(turn!==player) return;
 
   if(!selected){
-    selected = {x,y};
+    selected={x,y};
   } else {
-    move(selected.x, selected.y, x, y);
-    selected = null;
+    board[y][x]=board[selected.y][selected.x];
+    board[selected.y][selected.x]="";
+    selected=null;
+
+    turn = turn==="white"?"black":"white";
+
+    db.ref("rooms/"+room).set({board,turn});
   }
-};
-
-function move(x1,y1,x2,y2){
-  if(turn !== player) return;
-
-  board[y2][x2] = board[y1][x1];
-  board[y1][x1] = "";
-
-  turn = turn === "white" ? "black" : "white";
-
-  db.ref("rooms/"+room).set({ board, turn });
 }
 
 draw();
