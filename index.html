@@ -14,9 +14,21 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
 .main { flex:1; display:flex; flex-direction:column; }
 .header { background:#000; padding:10px; text-align:center; }
 .content { display:flex; flex:1; }
-.game { flex:2; text-align:center; }
+.game { flex:2; text-align:center; position:relative; }
 .chat { width:350px; }
 canvas { border:2px solid white; margin-top:10px; touch-action: manipulation; }
+
+/* contador */
+#countdown {
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:100px;
+  color:white;
+  text-shadow:3px 3px black;
+  display:none;
+}
 </style>
 </head>
 
@@ -25,19 +37,32 @@ canvas { border:2px solid white; margin-top:10px; touch-action: manipulation; }
 <div class="container">
 
 <div class="sidebar">
-<button class="game-btn">♟️ Ajedrez</button>
+<button class="game-btn" onclick="mostrarIframe()">🎮 Juegos</button>
+<button class="game-btn" onclick="mostrarAjedrez()">♟️ Ajedrez</button>
 </div>
 
 <div class="main">
 
-<div class="header"><h1>♟️ AJEDREZ ONLINE</h1></div>
+<div class="header"><h1>🔥 PORTAL GAMER 🔥</h1></div>
 
 <div class="content">
 
 <div class="game">
+
+<!-- JUEGOS -->
+<iframe id="gameFrame"
+src="https://scratch.mit.edu/projects/10128407/embed"
+width="100%" height="100%"></iframe>
+
+<!-- AJEDREZ -->
+<div id="chessUI" style="display:none;">
 <input id="room" placeholder="Sala (ej: 123)">
-<button onclick="join()">Entrar</button>
+<button onclick="join()">Unirse</button>
 <canvas id="board" width="320" height="320"></canvas>
+</div>
+
+<div id="countdown"></div>
+
 </div>
 
 <div class="chat">
@@ -49,7 +74,7 @@ canvas { border:2px solid white; margin-top:10px; touch-action: manipulation; }
 </div>
 
 <script>
-// 🔥 Firebase
+// Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBYJFm9zy8vRv4F0Ets_3NLtUJ2zuj27BE",
   authDomain: "ajedrez-online-3c037.firebaseapp.com",
@@ -60,12 +85,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-let room = "";
-let player = "";
-let turn = "white";
+let room="", player="", turn="white";
 
-// ♟️ piezas reales
-let board = [
+// tablero
+let board=[
 ["♜","♞","♝","♛","♚","♝","♞","♜"],
 ["♟","♟","♟","♟","♟","♟","♟","♟"],
 ["","","","","","","",""],
@@ -76,85 +99,104 @@ let board = [
 ["♖","♘","♗","♕","♔","♗","♘","♖"]
 ];
 
-const canvas = document.getElementById("board");
-const ctx = canvas.getContext("2d");
-const size = 40;
+const canvas=document.getElementById("board");
+const ctx=canvas.getContext("2d");
+const size=40;
+let selected=null;
 
-let selected = null;
+// UI
+function mostrarAjedrez(){
+  document.getElementById("gameFrame").style.display="none";
+  document.getElementById("chessUI").style.display="block";
+}
+function mostrarIframe(){
+  document.getElementById("gameFrame").style.display="block";
+  document.getElementById("chessUI").style.display="none";
+}
 
-// 🔗 UNIR SALA (ARREGLADO)
+// UNIR SALA
 function join(){
-  room = document.getElementById("room").value;
-  const ref = db.ref("rooms/" + room);
+  room=document.getElementById("room").value;
+  const ref=db.ref("rooms/"+room);
 
-  ref.get().then(snap=>{
+  ref.once("value").then(snap=>{
     if(!snap.exists()){
       player="white";
-      ref.set({board, turn});
-    } else {
+      ref.set({board,turn,players:1,start:false});
+    }else{
       player="black";
+      ref.update({players:2,start:true});
     }
   });
 
-  ref.on("value", snap=>{
-    let data = snap.val();
-    if(data){
-      board = data.board;
-      turn = data.turn;
-      draw();
+  ref.on("value",snap=>{
+    let data=snap.val();
+    if(!data)return;
+
+    board=data.board;
+    turn=data.turn;
+
+    if(data.start){
+      iniciarCuenta();
     }
+
+    draw();
   });
 }
 
-// 🎨 DIBUJAR
+// contador
+function iniciarCuenta(){
+  let c=3;
+  let el=document.getElementById("countdown");
+  el.style.display="block";
+
+  let interval=setInterval(()=>{
+    el.innerText=c;
+    c--;
+    if(c<0){
+      clearInterval(interval);
+      el.style.display="none";
+    }
+  },1000);
+}
+
+// dibujar
 function draw(){
   ctx.clearRect(0,0,320,320);
 
   for(let y=0;y<8;y++){
     for(let x=0;x<8;x++){
-      ctx.fillStyle = (x+y)%2 ? "#444" : "#eee";
+      ctx.fillStyle=(x+y)%2?"#444":"#eee";
       ctx.fillRect(x*size,y*size,size,size);
 
-      let piece = board[y][x];
-      if(piece){
+      let p=board[y][x];
+      if(p){
         ctx.font="30px Arial";
-        ctx.fillStyle = piece.match(/[♙♖♘♗♕♔]/) ? "white" : "black";
-        ctx.fillText(piece, x*size+6, y*size+30);
+        ctx.fillStyle=p.match(/[♙♖♘♗♕♔]/)?"white":"black";
+        ctx.fillText(p,x*size+6,y*size+30);
       }
     }
   }
 }
 
-// 👆 CLICK + TOUCH (ARREGLADO)
-canvas.addEventListener("click", e=>{
+// mover
+canvas.onclick=e=>{
   let x=Math.floor(e.offsetX/size);
   let y=Math.floor(e.offsetY/size);
-  handleMove(x,y);
-});
 
-canvas.addEventListener("touchstart", e=>{
-  let rect=canvas.getBoundingClientRect();
-  let x=Math.floor((e.touches[0].clientX-rect.left)/size);
-  let y=Math.floor((e.touches[0].clientY-rect.top)/size);
-  handleMove(x,y);
-});
-
-// mover
-function handleMove(x,y){
-  if(turn!==player) return;
+  if(turn!==player)return;
 
   if(!selected){
     selected={x,y};
-  } else {
+  }else{
     board[y][x]=board[selected.y][selected.x];
     board[selected.y][selected.x]="";
     selected=null;
 
-    turn = turn==="white"?"black":"white";
-
-    db.ref("rooms/"+room).set({board,turn});
+    turn=turn==="white"?"black":"white";
+    db.ref("rooms/"+room).set({board,turn,players:2,start:true});
   }
-}
+};
 
 draw();
 </script>
