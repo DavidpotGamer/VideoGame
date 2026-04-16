@@ -11,7 +11,6 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
 
 .container { display:flex; height:100vh; }
 
-/* MENU */
 .sidebar {
   width:120px;
   background:#000;
@@ -49,7 +48,6 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
   z-index:10;
 }
 
-/* CONTENIDO */
 .main { flex:1; display:flex; flex-direction:column; }
 .header { background:#000; padding:10px; text-align:center; }
 .content { display:flex; flex:1; }
@@ -96,7 +94,7 @@ canvas {
 <div class="game">
 
 <input id="room" placeholder="Sala (ej: 123)">
-<button onclick="join()" ontouchstart="join()">Unirse</button>
+<button id="joinBtn">Unirse</button>
 
 <canvas id="board" width="320" height="320"></canvas>
 
@@ -142,7 +140,10 @@ const ctx=canvas.getContext("2d");
 const size=40;
 let selected=null;
 
-/* MENU TOGGLE */
+/* BOTON iPad FIX */
+document.getElementById("joinBtn").addEventListener("click", join);
+
+/* MENU */
 function toggleMenu(){
   const menu=document.getElementById("menu");
   const btn=document.getElementById("toggleBtn");
@@ -160,7 +161,8 @@ function toggleMenu(){
 
 /* UNIR */
 function join(){
-  alert("Conectando...");
+  // 🔥 feedback visual (para iPad)
+  document.body.style.background="#222";
 
   room=document.getElementById("room").value;
   const ref=db.ref("rooms/"+room);
