@@ -30,7 +30,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            padding-top: 60px; /* Espacio para el botón de cierre */
+            padding-top: 60px;
         }
 
         .sidebar.hidden {
@@ -49,6 +49,7 @@
             border-radius: 8px;
             transition: 0.2s;
             font-weight: bold;
+            text-align: center;
         }
 
         .game-btn:hover {
@@ -109,7 +110,7 @@
     <div class="sidebar" id="menu">
         <button class="game-btn" onclick="cambiarJuego('https://fortygames.io/games/chess-master/index.html')">♟️ Ajedrez M.</button>
         <button class="game-btn" onclick="cambiarJuego('https://rocketgoal.io/')">⚽ RocketGoal</button>
-        <button class="game-btn" onclick="window.open('https://slither.io', '_blank')">🐍 Slither</button>
+        <button class="game-btn" onclick="cambiarJuego('https://slither.io')">🐍 Slither</button>
     </div>
 
     <div class="main">
@@ -130,7 +131,6 @@
 </div>
 
 <script>
-    // Función única para cambiar de juego
     function cambiarJuego(url) {
         document.getElementById("gameFrame").src = url;
     }
