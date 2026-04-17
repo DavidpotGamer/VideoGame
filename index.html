@@ -8,22 +8,21 @@
             --primary: #0084EF;
             --secondary: #00c853;
             --bg-dark: #0a0a0a;
-            --sidebar-width: 150px;
         }
 
         body { 
             margin: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', sans-serif; 
             background: var(--bg-dark); 
             color: white; 
-            overflow: hidden; /* Prevents double scrollbars */
+            overflow: hidden; 
         }
 
         .container { display: flex; height: 100vh; }
 
-        /* SIDEBAR */
+        /* MENU LATERAL */
         .sidebar {
-            width: var(--sidebar-width);
+            width: 140px;
             background: #000;
             padding: 15px;
             transition: all 0.3s ease;
@@ -31,6 +30,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            padding-top: 60px; /* Espacio para el botón de cierre */
         }
 
         .sidebar.hidden {
@@ -40,7 +40,6 @@
             overflow: hidden;
         }
 
-        /* BUTTONS */
         .game-btn {
             padding: 12px;
             background: #1a1a1a;
@@ -49,51 +48,50 @@
             cursor: pointer;
             border-radius: 8px;
             transition: 0.2s;
-            text-align: left;
             font-weight: bold;
         }
 
         .game-btn:hover {
             background: var(--primary);
-            box-shadow: 0 0 15px var(--primary);
-            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--primary);
         }
 
+        /* BOTONES FLOTANTES */
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
-            background: #222;
+            background: var(--primary);
             color: white;
-            border: 1px solid #444;
-            padding: 8px;
+            border: none;
+            padding: 8px 12px;
             cursor: pointer;
             border-radius: 5px;
+            font-weight: bold;
         }
 
         #toggleBtn { top: 10px; left: 10px; }
         #chatToggle { top: 10px; right: 10px; background: var(--secondary); }
 
-        /* MAIN AREA */
-        .main { flex: 1; display: flex; flex-direction: column; position: relative; }
+        /* CONTENIDO */
+        .main { flex: 1; display: flex; flex-direction: column; }
         
         .header { 
-            background: linear-gradient(90deg, #000, #111);
-            padding: 15px; 
+            background: #000;
+            padding: 10px; 
             text-align: center;
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 2px; }
+        .header h1 { margin: 0; font-size: 1.2rem; text-transform: uppercase; }
 
         .content { display: flex; flex: 1; overflow: hidden; }
 
         .game { flex: 1; background: #000; }
 
         .chat { 
-            width: 300px; 
+            width: 350px; 
             transition: 0.3s; 
             border-left: 2px solid #222;
-            background: #000;
         }
 
         .chat.hidden { width: 0; border: none; }
@@ -103,25 +101,25 @@
 </head>
 <body>
 
-<button id="toggleBtn" class="toggle-ctrl" onclick="toggleMenu()">☰</button>
-<button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 Chat</button>
+<button id="toggleBtn" class="toggle-ctrl" onclick="toggleMenu()">☰ MENU</button>
+<button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
 
 <div class="container">
     
     <div class="sidebar" id="menu">
-        <div style="height: 50px;"></div> <button class="game-btn" onclick="cambiarJuego('https://www.crazygames.com/embed/master-chess')">♟️ Ajedrez</button>
+        <button class="game-btn" onclick="cambiarJuego('https://fortygames.io/games/chess-master/index.html')">♟️ Ajedrez M.</button>
         <button class="game-btn" onclick="cambiarJuego('https://rocketgoal.io/')">⚽ RocketGoal</button>
-        <button class="game-btn" onclick="window.open('https://slither.io', '_blank')">🐍 Slither (New Tab)</button>
+        <button class="game-btn" onclick="window.open('https://slither.io', '_blank')">🐍 Slither</button>
     </div>
 
     <div class="main">
         <div class="header">
-            <h1>🔥 FACHA GAMES 🔥</h1>
+            <h1>🔥 FACHAS JUEGOS 🔥</h1>
         </div>
 
         <div class="content">
             <div class="game">
-                <iframe id="gameFrame" src="https://www.crazygames.com/embed/master-chess" allowfullscreen></iframe>
+                <iframe id="gameFrame" src="https://fortygames.io/games/chess-master/index.html" allowfullscreen></iframe>
             </div>
 
             <div class="chat" id="chat">
@@ -132,6 +130,7 @@
 </div>
 
 <script>
+    // Función única para cambiar de juego
     function cambiarJuego(url) {
         document.getElementById("gameFrame").src = url;
     }
