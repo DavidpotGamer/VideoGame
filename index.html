@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>🎮 Portal PRO</title>
+<title>🎮FACHA GAME</title>
 
 <style>
 body { margin:0; font-family:sans-serif; background:#111; color:white; }
 
 .container { display:flex; height:100vh; }
 
+/* MENU */
 .sidebar {
   width:120px;
   background:#000;
@@ -32,6 +33,7 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
   width:100%;
 }
 
+/* BOTONES */
 #toggleBtn{
   position:absolute;
   top:10px;
@@ -56,6 +58,7 @@ body { margin:0; font-family:sans-serif; background:#111; color:white; }
   z-index:10;
 }
 
+/* CONTENIDO */
 .main { flex:1; display:flex; flex-direction:column; }
 .header { background:#000; padding:10px; text-align:center; }
 .content { display:flex; flex:1; }
@@ -85,10 +88,7 @@ iframe {
 
 <div class="sidebar" id="menu">
 
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/10128407/embed')">🎮 Juego 1</button>
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/34459990/embed')">🎮 Juego 2</button>
-<button class="game-btn" onclick="cambiarJuego('https://scratch.mit.edu/projects/165126/embed')">🎮 Juego 3</button>
-
+<button class="game-btn" onclick="abrirAjedrez()">♟️ Ajedrez</button>
 <button class="game-btn" onclick="abrirRocket()">⚽ RocketGoal</button>
 <button class="game-btn" onclick="abrirSlither()">🐍 Slither</button>
 
@@ -104,7 +104,7 @@ iframe {
 
 <div class="game">
 <iframe id="gameFrame"
-src="https://scratch.mit.edu/projects/10128407/embed">
+src="https://www.crazygames.com/embed/master-chess">
 </iframe>
 </div>
 
@@ -119,18 +119,22 @@ src="https://scratch.mit.edu/projects/10128407/embed">
 </div>
 
 <script>
-function cambiarJuego(url){
-  document.getElementById("gameFrame").src = url;
+
+// AJEDREZ
+function abrirAjedrez(){
+  document.getElementById("gameFrame").src =
+  "https://www.crazygames.com/embed/master-chess";
 }
 
 // RocketGoal
 function abrirRocket(){
-  document.getElementById("gameFrame").src = "https://rocketgoal.io/";
+  document.getElementById("gameFrame").src =
+  "https://rocketgoal.io/";
 }
 
-// 🔥 FORZAR Slither en iframe
+// Slither
 function abrirSlither(){
-  document.getElementById("gameFrame").src = "https://slither.io";
+  window.open("https://slither.io", "_blank");
 }
 
 // menú
@@ -162,6 +166,7 @@ function toggleChat(){
     btn.innerText="💬";
   }
 }
+
 </script>
 
 </body>
