@@ -106,8 +106,13 @@
     
     <div class="sidebar" id="menu">
         <button class="game-btn" onclick="cambiarJuego('https://fortygames.io/games/chess-master/index.html')">♟️ Ajedrez M.</button>
+        
         <button class="game-btn" onclick="cambiarJuego('https://rocketgoal.io/')">⚽ RocketGoal</button>
+        
         <button class="game-btn" onclick="cambiarJuego('https://www.blipzi.com/es/gulper-io.html')">🐍 Gulper.io</button>
+        
+        <!-- NUEVA SECCIÓN PVZ -->
+        <button class="game-btn" onclick="cambiarJuego('https://pvzol.com/')">🌱 Plants vs Zombies</button>
     </div>
 
     <div class="main">
@@ -133,13 +138,11 @@
     }
 
     function toggleMenu() {
-        const menu = document.getElementById("menu");
-        menu.classList.toggle("hidden");
+        document.getElementById("menu").classList.toggle("hidden");
     }
 
     function toggleChat() {
-        const chat = document.getElementById("chat");
-        chat.classList.toggle("hidden");
+        document.getElementById("chat").classList.toggle("hidden");
     }
 </script>
 
