@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎮 FACHA GAMES</title>
     <style>
         :root {
             --primary: #0084EF;
             --secondary: #00c853;
+            --accent: #ff9800; /* Naranja para Moto Games */
             --bg-dark: #0a0a0a;
         }
 
         body { 
             margin: 0; 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
             background: var(--bg-dark); 
             color: white; 
             overflow: hidden; 
@@ -20,11 +22,12 @@
 
         .container { display: flex; height: 100vh; }
 
+        /* MENU LATERAL */
         .sidebar {
             width: 140px;
             background: #000;
             padding: 15px;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
             border-right: 2px solid #222;
             display: flex;
             flex-direction: column;
@@ -40,7 +43,7 @@
         }
 
         .game-btn {
-            padding: 12px;
+            padding: 12px 5px;
             background: #1a1a1a;
             border: 1px solid #333;
             color: white;
@@ -49,29 +52,40 @@
             transition: 0.2s;
             font-weight: bold;
             text-align: center;
+            font-size: 0.85rem;
         }
 
         .game-btn:hover {
             background: var(--primary);
             box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.03);
         }
 
+        /* Color especial para Moto Games */
+        .moto-btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* BOTONES DE CONTROL */
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         #toggleBtn { top: 10px; left: 10px; }
         #chatToggle { top: 10px; right: 10px; background: var(--secondary); }
 
-        .main { flex: 1; display: flex; flex-direction: column; }
+        /* AREAS PRINCIPALES */
+        .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
         
         .header { 
             background: #000;
@@ -80,16 +94,17 @@
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { margin: 0; font-size: 1.2rem; text-transform: uppercase; }
+        .header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; }
 
         .content { display: flex; flex: 1; overflow: hidden; }
 
-        .game { flex: 1; background: #000; }
+        .game { flex: 1; background: #000; position: relative; }
 
         .chat { 
             width: 350px; 
-            transition: 0.3s; 
+            transition: 0.3s ease-in-out; 
             border-left: 2px solid #222;
+            background: #000;
         }
 
         .chat.hidden { width: 0; border: none; }
@@ -106,15 +121,10 @@
     
     <div class="sidebar" id="menu">
         <button class="game-btn" onclick="cambiarJuego('https://fortygames.io/games/chess-master/index.html')">♟️ Ajedrez M.</button>
-        
         <button class="game-btn" onclick="cambiarJuego('https://rocketgoal.io/')">⚽ RocketGoal</button>
+        <button class="game-btn" onclick="cambiarJuego('https://gulper.io')">🐍 Gulper.io</button>
         
-        <button class="game-btn" onclick="cambiarJuego('https://www.blipzi.com/es/gulper-io.html')">🐍 Gulper.io</button>
-
-        <button class="game-btn" onclick="cambiarJuego('https://www.miniplay.com/embed/plants-vs-zombies')">🌱 Plants vs Zombies</button>
-
-        <!-- NUEVO JUEGO -->
-        <button class="game-btn" onclick="cambiarJuego('https://html5gameshq.com/iframed/moto-x3m')">🏍️ MotoGame</button>
+        <button class="game-btn moto-btn" onclick="cambiarJuego('https://classroom6x.github.io/go/class-458.html')">🏍️ Moto Games</button>
     </div>
 
     <div class="main">
@@ -124,7 +134,9 @@
 
         <div class="content">
             <div class="game">
-                <iframe id="gameFrame" src="https://fortygames.io/games/chess-master/index.html" allowfullscreen></iframe>
+                <iframe id="gameFrame" src="https://fortygames.io/games/chess-master/index.html" 
+                        allowfullscreen 
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
             </div>
 
             <div class="chat" id="chat">
@@ -140,11 +152,13 @@
     }
 
     function toggleMenu() {
-        document.getElementById("menu").classList.toggle("hidden");
+        const menu = document.getElementById("menu");
+        menu.classList.toggle("hidden");
     }
 
     function toggleChat() {
-        document.getElementById("chat").classList.toggle("hidden");
+        const chat = document.getElementById("chat");
+        chat.classList.toggle("hidden");
     }
 </script>
 
