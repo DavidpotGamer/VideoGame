@@ -8,13 +8,13 @@
         :root {
             --primary: #0084EF;
             --secondary: #00c853;
-            --accent: #ff9800; /* Naranja para Moto Games */
             --bg-dark: #0a0a0a;
+            --card-bg: #1a1a1a;
         }
 
         body { 
             margin: 0; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            font-family: 'Segoe UI', sans-serif; 
             background: var(--bg-dark); 
             color: white; 
             overflow: hidden; 
@@ -22,138 +22,150 @@
 
         .container { display: flex; height: 100vh; }
 
-        /* MENU LATERAL */
-        .sidebar {
-            width: 140px;
-            background: #000;
-            padding: 15px;
-            transition: all 0.3s ease-in-out;
-            border-right: 2px solid #222;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-top: 60px;
-        }
-
-        .sidebar.hidden {
-            width: 0;
-            padding: 0;
-            border: none;
-            overflow: hidden;
-        }
-
-        .game-btn {
-            padding: 12px 5px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: white;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.2s;
-            font-weight: bold;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        .game-btn:hover {
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            transform: scale(1.03);
-        }
-
-        /* Color especial para Moto Games */
-        .moto-btn:hover {
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        /* BOTONES DE CONTROL */
+        /* BOTONES FLOTANTES */
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
-            background: var(--primary);
+            background: #222;
             color: white;
-            border: none;
-            padding: 10px 15px;
+            border: 1px solid #444;
+            padding: 10px;
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-
-        #toggleBtn { top: 10px; left: 10px; }
+        #homeBtn { top: 10px; left: 10px; background: var(--primary); }
         #chatToggle { top: 10px; right: 10px; background: var(--secondary); }
 
         /* AREAS PRINCIPALES */
-        .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .main { flex: 1; display: flex; flex-direction: column; position: relative; }
         
         .header { 
             background: #000;
-            padding: 10px; 
+            padding: 15px; 
             text-align: center;
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; }
+        .header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 3px; }
 
         .content { display: flex; flex: 1; overflow: hidden; }
 
-        .game { flex: 1; background: #000; position: relative; }
+        /* EL CONTENEDOR DEL JUEGO */
+        .game-container { flex: 1; position: relative; display: flex; flex-direction: column; }
+        
+        /* EL MENÚ DE CUADRADOS (LOBBY) */
+        #lobby {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            z-index: 10;
+            overflow-y: auto;
+        }
 
+        .game-card {
+            background: var(--card-bg);
+            border: 3px solid #333;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            aspect-ratio: 1 / 1;
+            text-align: center;
+        }
+
+        .game-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .game-card span { font-size: 4rem; margin-bottom: 10px; }
+        .game-card h3 { margin: 0; font-size: 1.2rem; }
+
+        /* IFRAME */
+        iframe { width: 100%; height: 100%; border: none; display: none; }
+        iframe.active { display: block; }
+
+        /* CHAT */
         .chat { 
             width: 350px; 
-            transition: 0.3s ease-in-out; 
+            transition: 0.3s; 
             border-left: 2px solid #222;
             background: #000;
         }
+        .chat.hidden { width: 0; border: none; overflow: hidden; }
 
-        .chat.hidden { width: 0; border: none; }
-
-        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<button id="toggleBtn" class="toggle-ctrl" onclick="toggleMenu()">☰ MENU</button>
+<button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
 <button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
 
 <div class="container">
-    
-    <div class="sidebar" id="menu">
-        <button class="game-btn" onclick="cambiarJuego('https://fortygames.io/games/chess-master/index.html')">♟️ Ajedrez M.</button>
-        <button class="game-btn" onclick="cambiarJuego('https://rocketgoal.io/')">⚽ RocketGoal</button>
-        <button class="game-btn" onclick="cambiarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">🐍 SnakeGame</button>
-        
-        <button class="game-btn moto-btn" onclick="cambiarJuego('https://classroom6x.github.io/go/class-458.html')">🏍️ Moto Games</button>
-    </div>
-
     <div class="main">
         <div class="header">
             <h1>🔥 FACHAS JUEGOS 🔥</h1>
         </div>
 
         <div class="content">
-            <div class="game">
-                <iframe id="gameFrame" src="https://fortygames.io/games/chess-master/index.html" 
-                        allowfullscreen 
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+            <div class="game-container">
+                
+                <div id="lobby">
+                    <div class="game-card" onclick="cargarJuego('https://fortygames.io/games/chess-master/index.html')">
+                        <span>♟️</span>
+                        <h3>Ajedrez Maestro</h3>
+                    </div>
+                    
+                    <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
+                        <span>⚽</span>
+                        <h3>RocketGoal</h3>
+                    </div>
+
+                    <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
+                        <span>🐍</span>
+                        <h3>Snake Game</h3>
+                    </div>
+
+                    <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
+                        <span>🏍️</span>
+                        <h3>Moto Games</h3>
+                    </div>
+                </div>
+
+                <iframe id="gameFrame" src="" allowfullscreen sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
             </div>
 
             <div class="chat" id="chat">
-                <iframe src="https://losfachasxd.chatango.com/"></iframe>
+                <iframe src="https://losfachasxd.chatango.com/" style="display:block;"></iframe>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function cambiarJuego(url) {
-        document.getElementById("gameFrame").src = url;
+    const lobby = document.getElementById('lobby');
+    const frame = document.getElementById('gameFrame');
+
+    function cargarJuego(url) {
+        lobby.style.display = 'none'; // Esconde el menú de cuadrados
+        frame.src = url;             // Carga el link
+        frame.classList.add('active'); // Muestra el iframe
     }
 
-    function toggleMenu() {
-        const menu = document.getElementById("menu");
-        menu.classList.toggle("hidden");
+    function irAlMenu() {
+        frame.src = "";              // Limpia el juego
+        frame.classList.remove('active'); // Esconde el iframe
+        lobby.style.display = 'grid'; // Muestra el menú de cuadrados
     }
 
     function toggleChat() {
