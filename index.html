@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ICONO -->
-    <link rel="icon" href="Proyecto nuevo (22).png" type="image/png">
-
     <title>🎮 FACHA GAMES</title>
 
     <style>
+
         :root {
             --primary: #0084EF;
             --secondary: #00c853;
@@ -17,20 +16,21 @@
             --card-bg: #1a1a1a;
         }
 
-        body { 
-            margin: 0; 
-            font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg-dark); 
-            color: white; 
-            overflow: hidden; 
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow: hidden;
         }
 
-        .container { 
-            display: flex; 
-            height: 100vh; 
+        .container {
+            display: flex;
+            height: 100vh;
         }
 
         /* BOTONES */
+
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
@@ -48,60 +48,62 @@
             transform: scale(1.05);
         }
 
-        #homeBtn { 
-            top: 10px; 
-            left: 10px; 
-            background: var(--primary); 
+        #homeBtn {
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
         }
 
-        #chatToggle { 
-            top: 10px; 
-            right: 10px; 
-            background: var(--secondary); 
+        #chatToggle {
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
         }
 
         /* MAIN */
-        .main { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative; 
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
-        .header { 
+        .header {
             background: #000;
-            padding: 15px; 
+            padding: 15px;
             text-align: center;
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { 
-            margin: 0; 
-            font-size: 1.5rem; 
-            letter-spacing: 3px; 
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
         }
 
-        .content { 
-            display: flex; 
-            flex: 1; 
-            overflow: hidden; 
+        .content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
         }
 
-        /* CONTENEDOR DEL JUEGO */
-        .game-container { 
-            flex: 1; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
+        /* JUEGOS */
+
+        .game-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* LOBBY */
         #lobby {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+
             background: var(--bg-dark);
 
             display: grid;
@@ -110,6 +112,7 @@
             gap: 20px;
             padding: 40px;
             box-sizing: border-box;
+
             z-index: 10;
             overflow-y: auto;
         }
@@ -137,165 +140,148 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .game-card span { 
-            font-size: 4rem; 
-            margin-bottom: 10px; 
+        .game-icon{
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 10px;
         }
 
-        .game-card h3 { 
-            margin: 0; 
-            font-size: 1.2rem; 
+        .game-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
         }
 
         /* IFRAME */
-        iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            display: none; 
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
         }
 
-        iframe.active { 
-            display: block; 
+        iframe.active {
+            display: block;
         }
 
         /* CHAT */
-        .chat { 
-            width: 350px; 
-            transition: 0.3s; 
+
+        .chat {
+            width: 350px;
+            transition: 0.3s;
             border-left: 2px solid #222;
             background: #000;
+            overflow: hidden;
         }
 
-        .chat.hidden { 
-            width: 0; 
-            border: none; 
-            overflow: hidden; 
+        .chat.hidden {
+            width: 0;
+            border: none;
         }
 
     </style>
+
 </head>
 
 <body>
 
-<button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
+    <!-- BOTONES -->
 
-<button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
+    <button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
 
-<div class="container">
+    <button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
 
-    <div class="main">
+    <div class="container">
 
-        <div class="header">
-            <h1>🔥 FACHA GAMES 🔥</h1>
-        </div>
+        <div class="main">
 
-        <div class="content">
+            <!-- TITULO -->
 
-            <div class="game-container">
+            <div class="header">
+                <h1>🔥 FACHA GAMES 🔥</h1>
+            </div>
+
+            <div class="content">
 
                 <!-- LOBBY -->
-                <div id="lobby">
 
-                    <!-- CHESS -->
-                    <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
-                        <span>♟️</span>
-                        <h3>Classic Games</h3>
+                <div class="game-container">
+
+                    <div id="lobby">
+
+                        <!-- FLAPPY BIRD -->
+
+                        <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
+
+                            <img src="flappy bird.png" class="game-icon">
+
+                            <h3>Flappy Bird</h3>
+
+                        </div>
+
                     </div>
 
-                    <!-- ROCKET GOAL -->
-                    <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
-                        <span>⚽</span>
-                        <h3>RocketGoal</h3>
-                    </div>
+                    <!-- IFRAME -->
 
-                    <!-- SNAKE -->
-                    <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
-                        <span>🐍</span>
-                        <h3>Snake Game</h3>
-                    </div>
-
-                    <!-- MOTO -->
-                    <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
-                        <span>🏍️</span>
-                        <h3>Moto Games</h3>
-                    </div>
-
-                    <!-- GOOGLE SNAKE -->
-                    <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
-                        <span>🎮</span>
-                        <h3>Snake Google</h3>
-                    </div>
-
-                    <!-- FLAPPY BIRD -->
-                    <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
-                        <span>🐤</span>
-                        <h3>Flappy Bird</h3>
-                    </div>
-
-                    <!-- NUEVO JUEGO -->
-                    <div class="game-card" onclick="cargarJuego('https://driftboss.io/#google_vignette')">
-                        <span>🚗</span>
-                        <h3>Drift Boss</h3>
-                    </div>
+                    <iframe
+                        id="gameFrame"
+                        src=""
+                        allowfullscreen
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
+                    </iframe>
 
                 </div>
 
-                <!-- IFRAME -->
-                <iframe 
-                    id="gameFrame" 
-                    src="" 
-                    allowfullscreen 
-                    sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
-                </iframe>
+                <!-- CHAT -->
 
-            </div>
+                <div class="chat" id="chat">
 
-            <!-- CHAT -->
-            <div class="chat" id="chat">
-                <iframe 
-                    src="https://losfachasxd.chatango.com/" 
-                    style="display:block;">
-                </iframe>
+                    <iframe
+                        src="https://chatsitopro.chatango.com/"
+                        style="width:100%; height:100%; border:none;">
+                    </iframe>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <script>
 
-<script>
+        const lobby = document.getElementById('lobby');
+        const frame = document.getElementById('gameFrame');
 
-    const lobby = document.getElementById('lobby');
-    const frame = document.getElementById('gameFrame');
+        function cargarJuego(url) {
 
-    function cargarJuego(url) {
+            lobby.style.display = 'none';
 
-        lobby.style.display = 'none';
+            frame.src = url;
 
-        frame.src = url;
+            frame.classList.add('active');
+        }
 
-        frame.classList.add('active');
-    }
+        function irAlMenu() {
 
-    function irAlMenu() {
+            frame.src = "";
 
-        frame.src = "";
+            frame.classList.remove('active');
 
-        frame.classList.remove('active');
+            lobby.style.display = 'grid';
+        }
 
-        lobby.style.display = 'grid';
-    }
+        function toggleChat() {
 
-    function toggleChat() {
+            const chat = document.getElementById("chat");
 
-        const chat = document.getElementById("chat");
+            chat.classList.toggle("hidden");
+        }
 
-        chat.classList.toggle("hidden");
-    }
-
-</script>
+    </script>
 
 </body>
+
 </html>
