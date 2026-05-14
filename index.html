@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,17 +18,17 @@
             --card-bg: #1a1a1a;
         }
 
-        body { 
-            margin: 0; 
-            font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg-dark); 
-            color: white; 
-            overflow: hidden; 
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow: hidden;
         }
 
-        .container { 
-            display: flex; 
-            height: 100vh; 
+        .container {
+            display: flex;
+            height: 100vh;
         }
 
         /* BOTONES */
@@ -48,51 +49,51 @@
             transform: scale(1.05);
         }
 
-        #homeBtn { 
-            top: 10px; 
-            left: 10px; 
-            background: var(--primary); 
+        #homeBtn {
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
         }
 
-        #chatToggle { 
-            top: 10px; 
-            right: 10px; 
-            background: var(--secondary); 
+        #chatToggle {
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
         }
 
         /* MAIN */
-        .main { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative; 
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
-        .header { 
+        .header {
             background: #000;
-            padding: 15px; 
+            padding: 15px;
             text-align: center;
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { 
-            margin: 0; 
-            font-size: 1.5rem; 
-            letter-spacing: 3px; 
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
         }
 
-        .content { 
-            display: flex; 
-            flex: 1; 
-            overflow: hidden; 
+        .content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
         }
 
         /* CONTENEDOR DEL JUEGO */
-        .game-container { 
-            flex: 1; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
+        .game-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         /* LOBBY */
@@ -137,40 +138,40 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .game-card span { 
-            font-size: 4rem; 
-            margin-bottom: 10px; 
+        .game-card span {
+            font-size: 4rem;
+            margin-bottom: 10px;
         }
 
-        .game-card h3 { 
-            margin: 0; 
-            font-size: 1.2rem; 
+        .game-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
         }
 
         /* IFRAME */
-        iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-            display: none; 
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
         }
 
-        iframe.active { 
-            display: block; 
+        iframe.active {
+            display: block;
         }
 
         /* CHAT */
-        .chat { 
-            width: 350px; 
-            transition: 0.3s; 
+        .chat {
+            width: 350px;
+            transition: 0.3s;
             border-left: 2px solid #222;
             background: #000;
+            overflow: hidden;
         }
 
-        .chat.hidden { 
-            width: 0; 
-            border: none; 
-            overflow: hidden; 
+        .chat.hidden {
+            width: 0;
+            border: none;
         }
 
     </style>
@@ -178,124 +179,156 @@
 
 <body>
 
-<button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
+    <!-- BOTONES -->
+    <button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
 
-<button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
+    <button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
 
-<div class="container">
+    <div class="container">
 
-    <div class="main">
+        <div class="main">
 
-        <div class="header">
-            <h1>🔥 FACHA GAMES 🔥</h1>
-        </div>
+            <!-- HEADER -->
+            <div class="header">
+                <h1>🔥 FACHA GAMES 🔥</h1>
+            </div>
 
-        <div class="content">
+            <div class="content">
 
-            <div class="game-container">
+                <!-- JUEGOS -->
+                <div class="game-container">
 
-                <!-- LOBBY -->
-                <div id="lobby">
+                    <div id="lobby">
 
-                    <!-- CHESS -->
-                    <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
-                        <span>♟️</span>
-                        <h3>Classic Games</h3>
+                        <!-- AJEDREZ -->
+                        <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
+                            <span>♟️</span>
+                            <h3>Classic Games</h3>
+                        </div>
+
+                        <!-- FUTBOL -->
+                        <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
+                            <span>⚽</span>
+                            <h3>RocketGoal</h3>
+                        </div>
+
+                        <!-- SNAKE -->
+                        <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
+                            <span>🐍</span>
+                            <h3>Snake Game</h3>
+                        </div>
+
+                        <!-- MOTOS -->
+                        <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
+                            <span>🏍️</span>
+                            <h3>Moto Games</h3>
+                        </div>
+
+                        <!-- GOOGLE SNAKE -->
+                        <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
+                            <span>🎮</span>
+                            <h3>Snake Google</h3>
+                        </div>
+
+                        <!-- FLAPPY -->
+                        <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
+                            <span>🐤</span>
+                            <h3>Flappy Bird</h3>
+                        </div>
+
+                        <!-- DRIFT BOSS -->
+                        <div class="game-card" onclick="cargarJuego('https://www.mathplayground.com/pg_drift_boss.html')">
+                            <span>🚗</span>
+                            <h3>Drift Boss</h3>
+                        </div>
+
                     </div>
 
-                    <!-- ROCKET GOAL -->
-                    <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
-                        <span>⚽</span>
-                        <h3>RocketGoal</h3>
-                    </div>
-
-                    <!-- SNAKE -->
-                    <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
-                        <span>🐍</span>
-                        <h3>Snake Game</h3>
-                    </div>
-
-                    <!-- MOTO -->
-                    <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
-                        <span>🏍️</span>
-                        <h3>Moto Games</h3>
-                    </div>
-
-                    <!-- GOOGLE SNAKE -->
-                    <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
-                        <span>🎮</span>
-                        <h3>Snake Google</h3>
-                    </div>
-
-                    <!-- FLAPPY BIRD -->
-                    <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
-                        <span>🐤</span>
-                        <h3>Flappy Bird</h3>
-                    </div>
-
-                    <!-- NUEVO JUEGO -->
-                    <div class="game-card" onclick="cargarJuego('https://driftboss.io/')">
-                        <span>🚗</span>
-                        <h3>Drift Boss</h3>
-                    </div>
+                    <!-- IFRAME -->
+                    <iframe 
+                        id="gameFrame" 
+                        src="" 
+                        allowfullscreen 
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
+                    </iframe>
 
                 </div>
 
-                <!-- IFRAME -->
-                <iframe 
-                    id="gameFrame" 
-                    src="" 
-                    allowfullscreen 
-                    sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
-                </iframe>
+                <!-- CHAT -->
+                <div class="chat" id="chat">
 
-            </div>
+                    <script id="cid0020000439711120875"
+                        data-cfasync="false"
+                        async
+                        src="//st.chatango.com/js/gz/emb.js"
+                        style="width:100%;height:100%;">
 
-            <!-- CHAT -->
-            <div class="chat" id="chat">
-                <iframe 
-                    src="https://losfachasxd.chatango.com/" 
-                    style="display:block;">
-                </iframe>
+                        {
+                            "handle":"chatsitopro",
+                            "arch":"js",
+                            "styles":{
+                                "a":"33ccff",
+                                "b":100,
+                                "c":"000000",
+                                "d":"000000",
+                                "k":"33ccff",
+                                "l":"33ccff",
+                                "m":"33ccff",
+                                "p":"10",
+                                "q":"33ccff",
+                                "r":100,
+                                "pos":"br",
+                                "cv":1,
+                                "cvbg":"33ccff",
+                                "cvw":200,
+                                "cvh":30,
+                                "ticker":1,
+                                "fwtickm":1
+                            }
+                        }
+
+                    </script>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <script>
 
-<script>
+        const lobby = document.getElementById('lobby');
+        const frame = document.getElementById('gameFrame');
 
-    const lobby = document.getElementById('lobby');
-    const frame = document.getElementById('gameFrame');
+        function cargarJuego(url) {
 
-    function cargarJuego(url) {
+            lobby.style.display = 'none';
 
-        lobby.style.display = 'none';
+            frame.src = url;
 
-        frame.src = url;
+            frame.classList.add('active');
+        }
 
-        frame.classList.add('active');
-    }
+        function irAlMenu() {
 
-    function irAlMenu() {
+            frame.src = "";
 
-        frame.src = "";
+            frame.classList.remove('active');
 
-        frame.classList.remove('active');
+            lobby.style.display = 'grid';
+        }
 
-        lobby.style.display = 'grid';
-    }
+        function toggleChat() {
 
-    function toggleChat() {
+            const chat = document.getElementById("chat");
 
-        const chat = document.getElementById("chat");
+            chat.classList.toggle("hidden");
+        }
 
-        chat.classList.toggle("hidden");
-    }
-
-</script>
+    </script>
 
 </body>
+
 </html>
