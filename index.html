@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ICONO -->
     <link rel="icon" href="Proyecto nuevo (22).png" type="image/png">
 
     <title>🎮 FACHA GAMES</title>
 
     <style>
+
         :root {
             --primary: #0084EF;
             --secondary: #00c853;
@@ -32,6 +32,7 @@
         }
 
         /* BOTONES */
+
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
@@ -62,6 +63,7 @@
         }
 
         /* MAIN */
+
         .main {
             flex: 1;
             display: flex;
@@ -88,7 +90,8 @@
             overflow: hidden;
         }
 
-        /* CONTENEDOR DEL JUEGO */
+        /* JUEGOS */
+
         .game-container {
             flex: 1;
             position: relative;
@@ -96,13 +99,13 @@
             flex-direction: column;
         }
 
-        /* LOBBY */
         #lobby {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+
             background: var(--bg-dark);
 
             display: grid;
@@ -111,6 +114,7 @@
             gap: 20px;
             padding: 40px;
             box-sizing: border-box;
+
             z-index: 10;
             overflow-y: auto;
         }
@@ -149,6 +153,7 @@
         }
 
         /* IFRAME */
+
         iframe {
             width: 100%;
             height: 100%;
@@ -161,6 +166,7 @@
         }
 
         /* CHAT */
+
         .chat {
             width: 350px;
             transition: 0.3s;
@@ -175,11 +181,13 @@
         }
 
     </style>
+
 </head>
 
 <body>
 
     <!-- BOTONES -->
+
     <button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
 
     <button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
@@ -188,55 +196,64 @@
 
         <div class="main">
 
-            <!-- HEADER -->
+            <!-- TITULO -->
+
             <div class="header">
                 <h1>🔥 FACHA GAMES 🔥</h1>
             </div>
 
             <div class="content">
 
-                <!-- JUEGOS -->
+                <!-- LOBBY -->
+
                 <div class="game-container">
 
                     <div id="lobby">
 
-                        <!-- AJEDREZ -->
+                        <!-- CHESS -->
+
                         <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
                             <span>♟️</span>
                             <h3>Classic Games</h3>
                         </div>
 
-                        <!-- FUTBOL -->
+                        <!-- ROCKETGOAL -->
+
                         <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
                             <span>⚽</span>
                             <h3>RocketGoal</h3>
                         </div>
 
                         <!-- SNAKE -->
+
                         <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
                             <span>🐍</span>
                             <h3>Snake Game</h3>
                         </div>
 
-                        <!-- MOTOS -->
+                        <!-- MOTO -->
+
                         <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
                             <span>🏍️</span>
                             <h3>Moto Games</h3>
                         </div>
 
                         <!-- GOOGLE SNAKE -->
+
                         <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
                             <span>🎮</span>
                             <h3>Snake Google</h3>
                         </div>
 
                         <!-- FLAPPY -->
+
                         <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
                             <span>🐤</span>
                             <h3>Flappy Bird</h3>
                         </div>
 
                         <!-- DRIFT BOSS -->
+
                         <div class="game-card" onclick="cargarJuego('https://www.mathplayground.com/pg_drift_boss.html')">
                             <span>🚗</span>
                             <h3>Drift Boss</h3>
@@ -245,47 +262,44 @@
                     </div>
 
                     <!-- IFRAME -->
-                    <iframe 
-                        id="gameFrame" 
-                        src="" 
-                        allowfullscreen 
+
+                    <iframe
+                        id="gameFrame"
+                        src=""
+                        allowfullscreen
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
                     </iframe>
 
                 </div>
 
                 <!-- CHAT -->
+
                 <div class="chat" id="chat">
 
                     <script id="cid0020000439711120875"
-                        data-cfasync="false"
-                        async
-                        src="//st.chatango.com/js/gz/emb.js"
-                        style="width:100%;height:100%;">
+                    data-cfasync="false"
+                    async
+                    src="//st.chatango.com/js/gz/emb.js"
+                    style="width:100%;height:100%;">
 
-                        {
-                            "handle":"chatsitopro",
-                            "arch":"js",
-                            "styles":{
-                                "a":"33ccff",
-                                "b":100,
-                                "c":"000000",
-                                "d":"000000",
-                                "k":"33ccff",
-                                "l":"33ccff",
-                                "m":"33ccff",
-                                "p":"10",
-                                "q":"33ccff",
-                                "r":100,
-                                "pos":"br",
-                                "cv":1,
-                                "cvbg":"33ccff",
-                                "cvw":200,
-                                "cvh":30,
-                                "ticker":1,
-                                "fwtickm":1
-                            }
-                        }
+                    {
+                    "handle":"chatsitopro",
+                    "arch":"js",
+                    "styles":{
+                    "a":"0084EF",
+                    "b":100,
+                    "c":"FFFFFF",
+                    "d":"FFFFFF",
+                    "k":"0084EF",
+                    "l":"0084EF",
+                    "m":"0084EF",
+                    "n":"FFFFFF",
+                    "p":"10",
+                    "q":"0084EF",
+                    "r":100,
+                    "fwtickm":1
+                    }
+                    }
 
                     </script>
 
