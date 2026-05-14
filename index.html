@@ -37,11 +37,12 @@
             background: #222;
             color: white;
             border: 1px solid #444;
-            padding: 10px;
+            padding: 8px 12px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
             transition: 0.2s;
+            font-size: 14px;
         }
 
         .toggle-ctrl:hover {
@@ -140,10 +141,15 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .game-icon{
-            width: 90px;
-            height: 90px;
+        .game-icon {
+            width: 80px;
+            height: 80px;
             object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .game-card span {
+            font-size: 4rem;
             margin-bottom: 10px;
         }
 
@@ -204,13 +210,48 @@
 
             <div class="content">
 
-                <!-- LOBBY -->
+                <!-- JUEGOS -->
 
                 <div class="game-container">
 
                     <div id="lobby">
 
-                        <!-- FLAPPY BIRD -->
+                        <!-- CHESS -->
+
+                        <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
+                            <span>♟️</span>
+                            <h3>Classic Games</h3>
+                        </div>
+
+                        <!-- ROCKETGOAL -->
+
+                        <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
+                            <span>⚽</span>
+                            <h3>RocketGoal</h3>
+                        </div>
+
+                        <!-- SNAKE -->
+
+                        <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
+                            <span>🐍</span>
+                            <h3>Snake Game</h3>
+                        </div>
+
+                        <!-- MOTOS -->
+
+                        <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
+                            <span>🏍️</span>
+                            <h3>Moto Games</h3>
+                        </div>
+
+                        <!-- GOOGLE SNAKE -->
+
+                        <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
+                            <span>🎮</span>
+                            <h3>Snake Google</h3>
+                        </div>
+
+                        <!-- FLAPPY BIRD CON IMAGEN -->
 
                         <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
 
@@ -218,6 +259,13 @@
 
                             <h3>Flappy Bird</h3>
 
+                        </div>
+
+                        <!-- DRIFT BOSS -->
+
+                        <div class="game-card" onclick="cargarJuego('https://www.mathplayground.com/pg_drift_boss.html')">
+                            <span>🚗</span>
+                            <h3>Drift Boss</h3>
                         </div>
 
                     </div>
@@ -239,7 +287,7 @@
 
                     <iframe
                         src="https://chatsitopro.chatango.com/"
-                        style="width:100%; height:100%; border:none;">
+                        style="width:100%; height:100%; border:none; display:block;">
                     </iframe>
 
                 </div>
