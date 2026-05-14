@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<link rel="icon" href="Proyecto nuevo (22).png" type="image/png">
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ICONO -->
+    <link rel="icon" href="Proyecto nuevo (22).png" type="image/png">
+
     <title>🎮 FACHA GAMES</title>
+
     <style>
         :root {
             --primary: #0084EF;
@@ -22,9 +25,12 @@
             overflow: hidden; 
         }
 
-        .container { display: flex; height: 100vh; }
+        .container { 
+            display: flex; 
+            height: 100vh; 
+        }
 
-        /* BOTONES FLOTANTES */
+        /* BOTONES */
         .toggle-ctrl {
             position: fixed;
             z-index: 100;
@@ -35,13 +41,33 @@
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
+            transition: 0.2s;
         }
-        #homeBtn { top: 10px; left: 10px; background: var(--primary); }
-        #chatToggle { top: 10px; right: 10px; background: var(--secondary); }
 
-        /* AREAS PRINCIPALES */
-        .main { flex: 1; display: flex; flex-direction: column; position: relative; }
-        
+        .toggle-ctrl:hover {
+            transform: scale(1.05);
+        }
+
+        #homeBtn { 
+            top: 10px; 
+            left: 10px; 
+            background: var(--primary); 
+        }
+
+        #chatToggle { 
+            top: 10px; 
+            right: 10px; 
+            background: var(--secondary); 
+        }
+
+        /* MAIN */
+        .main { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+        }
+
         .header { 
             background: #000;
             padding: 15px; 
@@ -49,20 +75,38 @@
             border-bottom: 2px solid #222;
         }
 
-        .header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 3px; }
+        .header h1 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+            letter-spacing: 3px; 
+        }
 
-        .content { display: flex; flex: 1; overflow: hidden; }
+        .content { 
+            display: flex; 
+            flex: 1; 
+            overflow: hidden; 
+        }
 
-        /* EL CONTENEDOR DEL JUEGO */
-        .game-container { flex: 1; position: relative; display: flex; flex-direction: column; }
-        
-        /* EL MENÚ DE CUADRADOS (LOBBY) */
+        /* CONTENEDOR DEL JUEGO */
+        .game-container { 
+            flex: 1; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        /* LOBBY */
         #lobby {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--bg-dark);
+
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
             gap: 20px;
             padding: 40px;
             box-sizing: border-box;
@@ -74,12 +118,15 @@
             background: var(--card-bg);
             border: 3px solid #333;
             border-radius: 15px;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             cursor: pointer;
             transition: 0.3s;
+
             aspect-ratio: 1 / 1;
             text-align: center;
         }
@@ -90,12 +137,27 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .game-card span { font-size: 4rem; margin-bottom: 10px; }
-        .game-card h3 { margin: 0; font-size: 1.2rem; }
+        .game-card span { 
+            font-size: 4rem; 
+            margin-bottom: 10px; 
+        }
+
+        .game-card h3 { 
+            margin: 0; 
+            font-size: 1.2rem; 
+        }
 
         /* IFRAME */
-        iframe { width: 100%; height: 100%; border: none; display: none; }
-        iframe.active { display: block; }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            display: none; 
+        }
+
+        iframe.active { 
+            display: block; 
+        }
 
         /* CHAT */
         .chat { 
@@ -104,88 +166,135 @@
             border-left: 2px solid #222;
             background: #000;
         }
-        .chat.hidden { width: 0; border: none; overflow: hidden; }
+
+        .chat.hidden { 
+            width: 0; 
+            border: none; 
+            overflow: hidden; 
+        }
 
     </style>
 </head>
+
 <body>
 
 <button id="homeBtn" class="toggle-ctrl" onclick="irAlMenu()">🏠 MENU</button>
+
 <button id="chatToggle" class="toggle-ctrl" onclick="toggleChat()">💬 CHAT</button>
 
 <div class="container">
+
     <div class="main">
+
         <div class="header">
-            <h1>🔥 FACHAS JUEGOS 🔥</h1>
+            <h1>🔥 FACHA GAMES 🔥</h1>
         </div>
 
         <div class="content">
+
             <div class="game-container">
-                
+
+                <!-- LOBBY -->
                 <div id="lobby">
+
+                    <!-- CHESS -->
                     <div class="game-card" onclick="cargarJuego('https://papergames.io/en/chess')">
                         <span>♟️</span>
-                        <h3>Clasic Games</h3>
+                        <h3>Classic Games</h3>
                     </div>
-                    
+
+                    <!-- ROCKET GOAL -->
                     <div class="game-card" onclick="cargarJuego('https://rocketgoal.io/')">
                         <span>⚽</span>
                         <h3>RocketGoal</h3>
                     </div>
 
+                    <!-- SNAKE -->
                     <div class="game-card" onclick="cargarJuego('https://dnrweqffuwjtx.cloudfront.net/snaker-io/')">
                         <span>🐍</span>
                         <h3>Snake Game</h3>
                     </div>
 
+                    <!-- MOTO -->
                     <div class="game-card" onclick="cargarJuego('https://classroom6x.github.io/go/class-458.html')">
                         <span>🏍️</span>
                         <h3>Moto Games</h3>
                     </div>
 
+                    <!-- GOOGLE SNAKE -->
                     <div class="game-card" onclick="cargarJuego('https://www.snake.es/')">
-    <span>🎮</span>
-    <h3>SnakeGoogleGame</h3>
-</div>
+                        <span>🎮</span>
+                        <h3>Snake Google</h3>
+                    </div>
 
-                       <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
+                    <!-- FLAPPY BIRD -->
+                    <div class="game-card" onclick="cargarJuego('https://flappybirdonline.gitlab.io/')">
                         <span>🐤</span>
                         <h3>Flappy Bird</h3>
                     </div>
-                    
+
+                    <!-- NUEVO JUEGO -->
+                    <div class="game-card" onclick="cargarJuego('https://driftboss.io/#google_vignette')">
+                        <span>🚗</span>
+                        <h3>Drift Boss</h3>
+                    </div>
+
                 </div>
-                
 
-                <iframe id="gameFrame" src="" allowfullscreen sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+                <!-- IFRAME -->
+                <iframe 
+                    id="gameFrame" 
+                    src="" 
+                    allowfullscreen 
+                    sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
+                </iframe>
+
             </div>
 
+            <!-- CHAT -->
             <div class="chat" id="chat">
-                <iframe src="https://losfachasxd.chatango.com/" style="display:block;"></iframe>
+                <iframe 
+                    src="https://losfachasxd.chatango.com/" 
+                    style="display:block;">
+                </iframe>
             </div>
+
         </div>
+
     </div>
+
 </div>
 
 <script>
+
     const lobby = document.getElementById('lobby');
     const frame = document.getElementById('gameFrame');
 
     function cargarJuego(url) {
-        lobby.style.display = 'none'; // Esconde el menú de cuadrados
-        frame.src = url;             // Carga el link
-        frame.classList.add('active'); // Muestra el iframe
+
+        lobby.style.display = 'none';
+
+        frame.src = url;
+
+        frame.classList.add('active');
     }
 
     function irAlMenu() {
-        frame.src = "";              // Limpia el juego
-        frame.classList.remove('active'); // Esconde el iframe
-        lobby.style.display = 'grid'; // Muestra el menú de cuadrados
+
+        frame.src = "";
+
+        frame.classList.remove('active');
+
+        lobby.style.display = 'grid';
     }
 
     function toggleChat() {
+
         const chat = document.getElementById("chat");
+
         chat.classList.toggle("hidden");
     }
+
 </script>
 
 </body>
