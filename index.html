@@ -157,6 +157,17 @@
             font-size: 1.2rem;
         }
 
+        /* DESCARGADOR */
+
+        .download-card {
+            background: linear-gradient(135deg, #ff0000, #990000);
+        }
+
+        .download-card:hover {
+            border-color: #ff4444;
+            box-shadow: 0 0 25px #ff0000;
+        }
+
         /* IFRAME */
 
         iframe {
@@ -295,16 +306,14 @@
                             <h3>Poki Games</h3>
                         </div>
 
+                        <!-- DESCARGADOR YOUTUBE -->
+
+                        <div class="game-card download-card" onclick="window.open('https://ssyoutube.com/', '_blank')">
+                            <span>📥</span>
+                            <h3>YouTube Downloader</h3>
+                        </div>
+
                     </div>
-
-                    <!-- DESCARGADOR YOUTUBE -->
-
-<div class="game-card" onclick="cargarJuego('https://ssyoutube.com/')">
-    <span>📥</span>
-    <h3>Descargar Videos</h3>
-</div>
-
-                    
 
                     <!-- IFRAME -->
 
